@@ -407,7 +407,7 @@
 
     const numeroWhatsApp = "221764962025";
 
-    if (numeroWhatsApp === "221XXXXXXXXX") {
+    if (numeroWhatsApp === "221764962025") {
       alert("Le numéro WhatsApp de la boutique doit encore être configuré.");
       return;
     }
