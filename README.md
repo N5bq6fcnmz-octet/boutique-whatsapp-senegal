@@ -405,9 +405,9 @@
       avant de commencer à vendre.
     */
 
-    const numeroWhatsApp = "221764962025";
+    const numeroWhatsApp = "221778702084";
 
-    if (numeroWhatsApp === "221764962025") {
+    if (numeroWhatsApp === "221778702084") {
       alert("Le numéro WhatsApp de la boutique doit encore être configuré.");
       return;
     }
