@@ -412,11 +412,8 @@
       return;
     }
 
-    const url =
-      "https://wa.me/" +
-      numeroWhatsApp +
-      "?text=" +
-      message;
+    const url = "https://wa.me/" + numeroWhatsApp + "?text=" + message;
+window.location.href = url;
 
     window.open(url, "_blank");
   }
