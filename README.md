@@ -110,7 +110,7 @@ function orderWhatsApp() {
     total += item.price;
   });
   message += "%0ATotal : " + total.toLocaleString("fr-FR") + " FCFA%0A%0AMerci de me confirmer la disponibilité.";
-  const url = "https://wa.me/" + numeroWhatsApp + "?text=" + message;
+  const url = "https://wa.me/221764962025" + numeroWhatsApp + "?text=" + message;
   window.open(url, "_blank");
 }
 </script>
