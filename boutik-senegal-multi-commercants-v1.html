@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boutik Sénégal 🇸🇳</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f5f7f6;color:#222}
+button,input{font:inherit}
+button{cursor:pointer}
+header{background:#111;color:#fff;padding:15px;position:sticky;top:0;z-index:10}
+.nav{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.logo{font-size:20px;font-weight:bold}
+.nav-actions{display:flex;gap:7px;flex-wrap:wrap}
+.nav button{border:0;border-radius:8px;padding:9px 11px;background:#fff;color:#111;font-weight:bold}
+.hero{background:linear-gradient(135deg,#00853f,#fdef42,#e31b23);padding:55px 18px;text-align:center;color:#fff}
+.hero h1{font-size:34px;margin-bottom:12px}
+.hero p{font-size:17px;margin-bottom:22px}
+.hero button,.primary{background:#111;color:#fff;border:0;border-radius:8px;padding:12px 18px;font-weight:bold}
+.container{max-width:1100px;margin:auto;padding:30px 15px}
+h2{margin-bottom:18px}
+.hidden{display:none!important}
+.notice{background:#fff3cd;padding:12px;border-radius:8px;margin-bottom:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#fff;border-radius:12px;padding:18px;box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.card h3{margin-bottom:8px}
+.muted{color:#666}
+.price{font-weight:bold;font-size:19px;margin:12px 0}
+.product-image{height:140px;border-radius:10px;background:#e9eceb;display:flex;align-items:center;justify-content:center;font-size:55px;margin-bottom:14px}
+.form{max-width:650px;margin:auto;background:#fff;padding:22px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.08)}
+label{display:block;font-weight:bold;margin:12px 0 6px}
+input{width:100%;padding:11px;border:1px solid #ccc;border-radius:7px}
+.form button{margin-top:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1}
+table{width:100%;border-collapse:collapse;background:#fff}
+th,td{padding:10px;border-bottom:1px solid #ddd;text-align:left}
+.small{font-size:13px}
+.success{background:#d1e7dd;padding:12px;border-radius:8px;margin-bottom:15px}
+.danger{background:#e31b23;color:#fff;border:0;border-radius:6px;padding:7px 10px}
+.whatsapp{background:#25d366;color:#fff;border:0;border-radius:8px;padding:10px 14px;font-weight:bold}
+.shop-link{color:#00853f;font-weight:bold;word-break:break-all}
+footer{background:#111;color:#fff;text-align:center;padding:25px 15px;margin-top:40px}
+@media(max-width:600px){.hero h1{font-size:28px}.nav{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">🇸🇳 Boutik Sénégal</div>
+    <div class="nav-actions">
+      <button onclick="showPage('home')">Accueil</button>
+      <button onclick="showPage('shops')">Boutiques</button>
+      <button onclick="showPage('register')">Créer ma boutique</button>
+      <button onclick="showPage('login')">Espace commerçant</button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="homePage">
+  <div class="hero">
+    <h1>Vendez au Sénégal avec votre boutique WhatsApp</h1>
+    <p>Créez votre boutique, ajoutez vos produits et recevez les commandes directement sur WhatsApp.</p>
+    <button onclick="showPage('register')">Créer ma boutique</button>
+  </div>
+  <div class="container">
+    <h2>Pourquoi utiliser Boutik Sénégal ?</h2>
+    <div class="grid">
+      <div class="card"><h3>🏪 Votre boutique</h3><p class="muted">Chaque commerçant peut présenter ses produits sous son propre nom.</p></div>
+      <div class="card"><h3>📱 Commandes WhatsApp</h3><p class="muted">Les clients envoient leur commande directement au commerçant.</p></div>
+      <div class="card"><h3>🇸🇳 Pensé pour le Sénégal</h3><p class="muted">Prix en FCFA et expérience simple sur téléphone.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="shopsPage" class="container hidden">
+  <h2>🏪 Boutiques disponibles</h2>
+  <div id="shopList" class="grid"></div>
+</section>
+
+<section id="registerPage" class="container hidden">
+  <div class="form">
+    <h2>Créer ma boutique</h2>
+    <div class="notice">Prototype : les données sont enregistrées uniquement dans ce navigateur. Pour une vraie plateforme multi-utilisateurs, une base de données et une authentification seront ajoutées ensuite.</div>
+    <label>Nom de la boutique</label>
+    <input id="regName" placeholder="Ex. Boutique Awa">
+    <label>Votre nom</label>
+    <input id="regOwner" placeholder="Ex. Awa Ndiaye">
+    <label>Numéro WhatsApp</label>
+    <input id="regPhone" placeholder="221771234567" inputmode="numeric">
+    <label>Description</label>
+    <input id="regDesc" placeholder="Mode, chaussures, accessoires...">
+    <button class="primary" onclick="registerShop()">Créer ma boutique</button>
+    <p id="registerMsg" class="small"></p>
+  </div>
+</section>
+
+<section id="loginPage" class="container hidden">
+  <div class="form">
+    <h2>Espace commerçant</h2>
+    <p class="muted">Dans cette version de démonstration, connectez-vous avec le nom exact de votre boutique.</p>
+    <label>Nom de la boutique</label>
+    <input id="loginName" placeholder="Nom de votre boutique">
+    <button class="primary" onclick="loginShop()">Ouvrir mon espace</button>
+    <p id="loginMsg" class="small"></p>
+  </div>
+</section>
+
+<section id="dashboardPage" class="container hidden">
+  <div id="dashboard"></div>
+</section>
+
+<section id="publicShopPage" class="container hidden">
+  <div id="publicShop"></div>
+</section>
+</main>
+
+<footer>© 2026 Boutik Sénégal 🇸🇳<br>Plateforme de boutiques et commandes WhatsApp.</footer>
+
+<script>
+const STORAGE_KEY = "boutikSenegalShopsV1";
+let currentShopId = null;
+let currentCart = [];
+
+function getShops(){
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; }
+  catch(e){ return []; }
+}
+function saveShops(shops){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(shops));
+}
+function makeId(){
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+}
+function cleanPhone(phone){
+  return phone.replace(/[^0-9]/g,"");
+}
+function showPage(page){
+  document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
+  document.getElementById(page + "Page").classList.remove("hidden");
+  if(page === "shops") renderShops();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function registerShop(){
+  const name = document.getElementById("regName").value.trim();
+  const owner = document.getElementById("regOwner").value.trim();
+  const phone = cleanPhone(document.getElementById("regPhone").value);
+  const desc = document.getElementById("regDesc").value.trim();
+
+  if(!name || !owner || !phone){
+    document.getElementById("registerMsg").textContent = "Veuillez remplir le nom, le propriétaire et WhatsApp.";
+    return;
+  }
+  if(phone.length !== 12 || !phone.startsWith("221")){
+    document.getElementById("registerMsg").textContent = "Utilisez le format sénégalais international : 221 + 9 chiffres.";
+    return;
+  }
+
+  const shops = getShops();
+  if(shops.some(s => s.name.toLowerCase() === name.toLowerCase())){
+    document.getElementById("registerMsg").textContent = "Ce nom de boutique existe déjà.";
+    return;
+  }
+
+  const shop = {
+    id: makeId(),
+    name, owner, phone,
+    description: desc || "Boutique sénégalaise",
+    products: [],
+    createdAt: new Date().toISOString()
+  };
+  shops.push(shop);
+  saveShops(shops);
+  currentShopId = shop.id;
+
+  document.getElementById("registerMsg").innerHTML =
+    '<span class="success">Boutique créée ! Vous pouvez maintenant ajouter vos produits.</span>';
+  setTimeout(() => renderDashboard(), 500);
+}
+function loginShop(){
+  const name = document.getElementById("loginName").value.trim().toLowerCase();
+  const shop = getShops().find(s => s.name.toLowerCase() === name);
+  if(!shop){
+    document.getElementById("loginMsg").textContent = "Boutique introuvable dans ce navigateur.";
+    return;
+  }
+  currentShopId = shop.id;
+  renderDashboard();
+}
+function renderDashboard(){
+  const shop = getShops().find(s => s.id === currentShopId);
+  if(!shop) return showPage("login");
+  document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
+  document.getElementById("dashboardPage").classList.remove("hidden");
+
+  const products = shop.products || [];
+  document.getElementById("dashboard").innerHTML = `
+    <h2>🏪 ${escapeHtml(shop.name)}</h2>
+    <p class="muted">${escapeHtml(shop.description)}</p>
+    <p class="small">WhatsApp : ${escapeHtml(shop.phone)}</p>
+    <p class="shop-link">Lien public : ${location.href.split("#")[0]}#shop=${encodeURIComponent(shop.id)}</p>
+    <hr style="margin:20px 0;border:0;border-top:1px solid #ddd">
+    <div class="form" style="max-width:none">
+      <h3>Ajouter un produit</h3>
+      <label>Nom du produit</label>
+      <input id="pName" placeholder="Ex. Robe femme">
+      <label>Prix en FCFA</label>
+      <input id="pPrice" type="number" min="0" placeholder="15000">
+      <label>Description</label>
+      <input id="pDesc" placeholder="Description du produit">
+      <label>Emoji/photo provisoire</label>
+      <input id="pImage" placeholder="👗">
+      <button class="primary" onclick="addProduct()">Ajouter le produit</button>
+    </div>
+    <h3 style="margin:25px 0 12px">Mes produits (${products.length})</h3>
+    <div id="myProducts" class="grid">
+      ${products.length ? products.map((p,i)=>`
+        <div class="card">
+          <div class="product-image">${escapeHtml(p.image || "🛍️")}</div>
+          <h3>${escapeHtml(p.name)}</h3>
+          <p class="muted">${escapeHtml(p.description || "")}</p>
+          <div class="price">${Number(p.price).toLocaleString("fr-FR")} FCFA</div>
+          <button class="danger" onclick="deleteProduct(${i})">Supprimer</button>
+        </div>`).join("") : '<p class="muted">Aucun produit pour le moment.</p>'}
+    </div>
+    <button style="margin-top:20px" onclick="showPublicShop('${shop.id}')">Voir ma boutique publique</button>
+  `;
+}
+function addProduct(){
+  const name = document.getElementById("pName").value.trim();
+  const price = Number(document.getElementById("pPrice").value);
+  const description = document.getElementById("pDesc").value.trim();
+  const image = document.getElementById("pImage").value.trim() || "🛍️";
+  if(!name || !Number.isFinite(price) || price <= 0){
+    alert("Entrez un nom et un prix valide.");
+    return;
+  }
+  const shops = getShops();
+  const shop = shops.find(s => s.id === currentShopId);
+  shop.products.push({name,price,description,image});
+  saveShops(shops);
+  renderDashboard();
+}
+function deleteProduct(index){
+  const shops = getShops();
+  const shop = shops.find(s => s.id === currentShopId);
+  shop.products.splice(index,1);
+  saveShops(shops);
+  renderDashboard();
+}
+function renderShops(){
+  const shops = getShops();
+  const box = document.getElementById("shopList");
+  box.innerHTML = shops.length ? shops.map(s=>`
+    <div class="card">
+      <h3>🏪 ${escapeHtml(s.name)}</h3>
+      <p class="muted">${escapeHtml(s.description)}</p>
+      <button class="primary" style="margin-top:12px" onclick="showPublicShop('${s.id}')">Voir la boutique</button>
+    </div>`).join("") :
+    '<div class="card"><p>Aucune boutique n’a encore été créée dans cette démonstration.</p></div>';
+}
+function showPublicShop(id){
+  const shop = getShops().find(s => s.id === id);
+  if(!shop) return;
+  currentCart = [];
+  document.querySelectorAll("main > section").forEach(s => s.classList.add("hidden"));
+  document.getElementById("publicShopPage").classList.remove("hidden");
+  document.getElementById("publicShop").innerHTML = `
+    <button onclick="showPage('shops')">← Retour aux boutiques</button>
+    <div style="margin-top:18px" class="card">
+      <h2>🏪 ${escapeHtml(shop.name)}</h2>
+      <p class="muted">${escapeHtml(shop.description)}</p>
+      <p class="small">Vendeur : ${escapeHtml(shop.owner)}</p>
+    </div>
+    <h2 style="margin-top:25px">Produits</h2>
+    <div class="grid">
+      ${(shop.products||[]).length ? shop.products.map((p,i)=>`
+        <div class="card">
+          <div class="product-image">${escapeHtml(p.image || "🛍️")}</div>
+          <h3>${escapeHtml(p.name)}</h3>
+          <p class="muted">${escapeHtml(p.description || "")}</p>
+          <div class="price">${Number(p.price).toLocaleString("fr-FR")} FCFA</div>
+          <button class="primary" onclick="addPublicCart(${i})">Ajouter au panier</button>
+        </div>`).join("") : '<div class="card"><p>Cette boutique n’a pas encore ajouté de produits.</p></div>'}
+    </div>
+    <div id="publicCart" class="card" style="margin-top:25px"></div>
+  `;
+  updatePublicCart(shop);
+}
+function addPublicCart(index){
+  const shop = getShops().find(s => s.id === currentShopId);
+  let targetShop = shop;
+  if(!targetShop){
+    const idFromButton = document.querySelector("#publicShopPage .shop-link")?.dataset?.id;
+  }
+  const pageShop = getCurrentPublicShop();
+  if(pageShop && pageShop.products[index]) currentCart.push(pageShop.products[index]);
+  updatePublicCart(pageShop);
+}
+let publicShopId = null;
+function getCurrentPublicShop(){
+  return publicShopId ? getShops().find(s=>s.id===publicShopId) : null;
+}
+const originalShowPublicShop = showPublicShop;
+showPublicShop = function(id){
+  publicShopId = id;
+  originalShowPublicShop(id);
+};
+function updatePublicCart(shop){
+  const box = document.getElementById("publicCart");
+  if(!box) return;
+  let total = currentCart.reduce((sum,p)=>sum+Number(p.price),0);
+  box.innerHTML = `
+    <h3>🛒 Panier (${currentCart.length})</h3>
+    ${currentCart.length ? currentCart.map((p,i)=>`
+      <div class="cart-item"><span>${escapeHtml(p.name)} - ${Number(p.price).toLocaleString("fr-FR")} FCFA</span>
+      <button class="danger" onclick="removePublicCart(${i})">Supprimer</button></div>`).join("") : '<p class="muted">Votre panier est vide.</p>'}
+    <div class="total">Total : ${total.toLocaleString("fr-FR")} FCFA</div>
+    <button class="whatsapp" onclick="orderPublicWhatsApp()">📱 Commander sur WhatsApp</button>
+  `;
+}
+function removePublicCart(index){
+  currentCart.splice(index,1);
+  updatePublicCart(getCurrentPublicShop());
+}
+function orderPublicWhatsApp(){
+  const shop = getCurrentPublicShop();
+  if(!shop || currentCart.length===0){
+    alert("Votre panier est vide.");
+    return;
+  }
+  let message = "Bonjour " + shop.name + ",%0A%0AJe souhaite commander :%0A%0A";
+  let total = 0;
+  currentCart.forEach(p=>{
+    message += "• " + p.name + " - " + Number(p.price).toLocaleString("fr-FR") + " FCFA%0A";
+    total += Number(p.price);
+  });
+  message += "%0ATotal : " + total.toLocaleString("fr-FR") + " FCFA";
+  const url = "https://wa.me/" + shop.phone + "?text=" + message;
+  window.location.href = url;
+}
+function escapeHtml(value){
+  return String(value).replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[c]));
+}
+
+(function init(){
+  const hash = location.hash;
+  if(hash.startsWith("#shop=")){
+    const id = decodeURIComponent(hash.slice(6));
+    publicShopId = id;
+    showPublicShop(id);
+  } else {
+    showPage("home");
+  }
+})();
+</script>
+</body>
+</html>
